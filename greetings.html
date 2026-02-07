@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proposal Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff5f8f, #ff9ab8);
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+.page {
+    display: none;
+    text-align: center;
+    padding: 30px;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.page.active {
+    display: block;
+}
+
+h1 {
+    font-size: 2.3em;
+    margin-bottom: 20px;
+}
+
+.buttons button {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+#yesBtn {
+    background: white;
+    color: #ff4e78;
+}
+
+#noBtn {
+    background: #ff2f68;
+    color: white;
+}
+
+#bubuBox img {
+    width: 150px;
+    transition: 0.3s;
+}
+
+.proposal {
+    font-size: 1.3em;
+    line-height: 1.8;
+}
+
+.sign {
+    margin-top: 30px;
+    font-size: 1.2em;
+}
+
+/* FULL SCREEN BUBU OVERLAY */
+#bubuOverlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.bubuSpread {
+    position: absolute;
+    width: 80px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <h1>💖 Will you be my Valentine? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="goNext()">Yes 😍</button>
+        <button id="noBtn" onclick="showBubu()">No 🙃</button>
+    </div>
+
+    <div id="bubuBox" style="display:none; margin-top:20px;">
+        <img id="bubuImg">
+        <div id="bubuText"></div>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <h1>💍 My Proposal 💍</h1>
+
+    <div class="proposal">
+        Swetha,<br><br>
+        From silly smiles to deep conversations,  
+        every moment with you feels right.<br><br>
+
+        This isn’t just a question,  
+        it’s my heart choosing you—again and again.<br><br>
+
+        Will you be mine, today and always? ❤️
+    </div>
+
+    <div class="sign">
+        — Yours, always,<br>
+        <strong>Aadhithiyaa ❤️</strong>
+    </div>
+</div>
+
+<!-- BUBU OVERLAY -->
+<div id="bubuOverlay"></div>
+
+<script>
+/* NO button drama */
+let clickCount = 0;
+let imgSize = 150;
+
+const bubuImages = [
+   "please.gif",
+   "please(1).gif",
+   "dont.gif",
+   "cry.gif"
+];
+
+const bubuTexts = [
+    "Please accept 🥺💗",
+    "Are you sureee? 👉👈",
+    "Don’t break my heart 😭",
+    "Okay I’m crying now 💔🥺"
+];
+
+function showBubu() {
+    document.getElementById("bubuBox").style.display = "block";
+    document.getElementById("bubuImg").src =
+        bubuImages[Math.min(clickCount, bubuImages.length - 1)];
+    document.getElementById("bubuText").innerText =
+        bubuTexts[Math.min(clickCount, bubuTexts.length - 1)];
+
+    imgSize += 25;
+    document.getElementById("bubuImg").style.width = imgSize + "px";
+    clickCount++;
+}
+
+/* YES button magic 💖 */
+function goNext() {
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+    spreadBubuFor3Seconds();
+}
+
+/* BUBU FULL-PAGE SPREAD (3 SECONDS) */
+function spreadBubuFor3Seconds() {
+    const overlay = document.getElementById("bubuOverlay");
+    const imgs = [
+        "love(1).gif",
+        "love(2).gif",
+    ];
+
+    const interval = setInterval(() => {
+        const img = document.createElement("img");
+        img.src = imgs[Math.floor(Math.random() * imgs.length)];
+        img.className = "bubuSpread";
+        img.style.left = Math.random() * 100 + "vw";
+        img.style.top = Math.random() * 100 + "vh";
+        overlay.appendChild(img);
+    }, 80);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        overlay.innerHTML = ""; // clear after 3 seconds
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
